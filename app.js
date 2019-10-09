@@ -10,16 +10,20 @@ const superHeroMovieIds = [
   { movieName: "Captain America: The Winter Soldier", movieId: "tt1843866"},
   { movieName: "Guardians of the Galaxy", movieId: "tt2015381"},
   { movieName: "Avengers: Age of Ultron", movieId: "tt2395427"},
-  { movieName: "Ant-Man", movieId: "tt2395427"}
+  { movieName: "Ant-Man", movieId: "tt0478970"}
 ];
 
 const movieCard = document.querySelector("#movie-card");
 
-const movie = superHeroMovieIds[5].movieId;
+let movie;
 const apiKey = `31152d26`;
-const url = `http://www.omdbapi.com/?apikey=${apiKey}&i=${movie}`;
+let url;
 
-fetch(url) // Call the fetch function passing the url of the API as a parameter
+superHeroMovieIds.forEach(element => {
+  console.log(element.movieId);
+  movie = element.movieId;
+  url = `http://www.omdbapi.com/?apikey=${apiKey}&i=${movie}`;
+  fetch(url) // Call the fetch function passing the url of the API as a parameter
   .then(response => {
     return response.json();
   })
@@ -30,4 +34,7 @@ fetch(url) // Call the fetch function passing the url of the API as a parameter
     console.log(data.Title);
     movieCard.innerHTML += `<h1>${data.Title}</h1>`
     movieCard.innerHTML += `<img src="${data.Poster}" alt="">`;
+    movieCard.innerHTML += `<h5>Actors: ${data.Actors}</h5>`;
+    movieCard.innerHTML += `<h4>Director: ${data.Director} ${data.Year}</h4>`;
   });
+});
